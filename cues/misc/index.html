@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300);
+      body {
+        background: #777;
+        font-weight: 400;
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      iframe {
+        display: block;
+        margin: 0 auto;
+        width: 800px;
+        height: 450px;
+        padding: 0;
+      }
+
+      body.dark {
+        background: #555;
+      }
+
+      .dark iframe {
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+      }
+
+      .player-container {
+        background: #555;
+      }
+
+      .dark .player-container {
+        background: #333;
+      }
+
+      .info-container {
+        background: #DDD;
+        padding-top: 10px;
+      }
+
+      .dark .info-container {
+        background: #666;
+      }
+
+      #info {
+        padding: 0 14px;
+        height: 300px;
+        overflow: hidden;
+        line-height: 18px;
+        font-size: 14px;
+      }
+
+    </style>
+    <script src="http://scripts.ustudio.com/player.latest.js"></script>
+  </head>
+
+  <div class="player-container">
+    <div id="player"></div>
+  </div>
+  <div class="info-container">
+    <div id="info"></div>
+  </div>
+
+  <script type="text/javascript">
+
+
+      // Sends all events to the console. Very noisy, do NOT
+      // enable for production environments.
+      uStudio.Player.LOGGING = true;
+      var body = document.body;
+
+      // Create a player from a specific embed URL, with the provided
+      // width and height. Defaults to 640x360
+      var player = uStudio.Player.create(
+        "http://app.ustudio.com/embed/DMww6aJXwTEE/UC1C2YCZPaCV", 800, 450);
+
+
+      // Simple text element to update what's happening.
+      var information = document.getElementById("info");
+
+      // Adding a listener for time updates, so we can display
+      // the current play time.
+      player.listen("Player.timeupdate", function(e) {
+        var message = "Current Time: " + e.currentTime;
+        updateMessage(message);
+      });
+
+      // Adding a listener for the "playing" state, so we can make
+      // the page background dark.
+      player.listen("Player.playing", function() {
+        updateMessage("Player is PLAYING");
+        body.className = "dark";
+      });
+
+      // Adding a listener for the "paused" state so we can return
+      // the page background to normal.
+      player.listen("Player.paused", function() {
+        updateMessage("Player is PAUSED");
+        body.className = "";
+      });
+
+      player.listen("announceToPage", function(message) {
+        updateMessage("ANNOUNCEMENT: " + message);
+      });
+
+      var pad = function(str, length, chr) {
+        length || (length = 2);
+        chr || (chr = '0');
+        var currentLength = String(str).length;
+        return currentLength >= length ? str : Array(length - currentLength + 1).join(chr) + str;
+      };
+
+      var updateMessage = function(message) {
+        var now = new Date();
+        var stamp = [now.getFullYear(), pad(now.getMonth() + 1), pad(now.getDate())].join('-') + " " +
+          [pad(now.getHours()), pad(now.getMinutes()), pad(now.getSeconds())].join(':');
+        var contents = stamp + " | " + message + "\n" + information.innerText;
+        information.innerText = contents.substr(0, 10000);
+      };
+
+      // Adding the player to the DOM via a placeholder.
+      player.replace(document.getElementById("player"));
+  </script>
+</html>
