@@ -5,8 +5,9 @@ ustudio-theme
 
 1. Install [Node.js](http://nodejs.org/)
 
-2. Install via NPM
-	cd path/to/ustudio-theme
+2. Install via [npm](https://www.npmjs.org/)
+
+    cd path/to/ustudio-theme
     npm install -g
 
 ##Usage
