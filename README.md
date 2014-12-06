@@ -20,10 +20,16 @@ Set your ustudio keys in config.json and create a theme in the themes/directory 
     ustudio-theme create -t [theme name]
 
 ###Delete an existing theme
-    ustudio-theme -t [theme name]
+    ustudio-theme delete -t [theme name]
 
 ###Upload a theme
-    ustudio-theme -t [theme name]
+    ustudio-theme upload -t [theme name]
+
+###Set a theme to a destination
+    ustudio-theme upload -t [theme name] -d [destination uid]
+
+###List destinations
+    ustudio-theme destinations
 
 ###Help
     ustudio-theme help
