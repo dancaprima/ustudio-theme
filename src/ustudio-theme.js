@@ -166,22 +166,22 @@ ustudio_theme.upload_theme = function(theme_name){
 	var path = theme_json.upload_url;
 
 	if(DEBUG){ console.log(("UPLOAD theme "+ theme_name+" ").debug + theme_zip_path); }
-
+	console.log("Uploading please wait...".info);
 	request('POST', path, null, {
 		form: {
 			fields:{
 				package: fs.createReadStream(theme_zip_path)
 			}
 		}
-	}, function(theme_upload_response){
-		var response = JSON.parse(theme_upload_response);
-		if(DEBUG){ console.log(" response: " + theme_upload_response); }
-		if(response.error){
-			console.error(("ERROR "+ response.message).error);
-			return;
+	}, function(response, statusCode){
+		if(DEBUG){
+			//console.log(response);
+			//console.log(statusCode);
+		}
+		if(statusCode >= 200 && statusCode < 300){
+			console.log(("Theme "+theme_name+" (" + theme_json.uid + ") uploaded to uStudio ("+statusCode+")").info);
 		}else{
-			//If the theme was uploaded successfully
-			console.log("Theme "+theme_name+" (" + theme_json.uid + ") uploaded to uStudio ".info);
+			console.error(("ERROR "+statusCode+" unable to upload theme.").error);
 		}
 	});
 };
@@ -189,7 +189,6 @@ ustudio_theme.upload_theme = function(theme_name){
 //## Create a new theme
 ustudio_theme.create_theme = function(theme_name){
 	"use strict";
-
 	var theme_dir_path = "./themes/"+theme_name,
 		theme_file_path = theme_dir_path + "/theme.json",
 		theme_dir_exists = fs.existsSync(theme_dir_path);
@@ -366,35 +365,21 @@ function request(method, path, params, options, callback){
 	}
 	if(!TEST){
 		if(options.form){
-			form.submit(post_options, function(err, response){
-				if (err){ throw err; }
-				var str = '';
-				response.setEncoding('utf-8');
-
-				response.on('data', function (chunk) {
-					str += chunk;
-				});
-				response.on('end', function () {
-					callback(str);
-				});
-			});
+			form.submit(post_options,  _.partial(response_callback, callback));
 		}else{
-			var req = https.request(post_options, _.partial(response_callback, callback));
-			if(options.form){
-				form.pipe(req);
-			}
+			var req = https.request(post_options, _.partial(response_callback, callback, null));
 			if(options.body && post_body){
 				req.write(post_body);
 			}
 			req.end();
 		}
 	}
-
 }
 
-function response_callback(callback, response) {
+function response_callback(callback, error, response) {
 	"use strict";
 	var str = '';
+	if(error){ throw error; }
 	response.setEncoding('utf-8');
 
 	response.on('data', function (chunk) {
@@ -402,7 +387,7 @@ function response_callback(callback, response) {
 	});
 
 	response.on('end', function () {
-		callback(str);
+		callback(str, response.statusCode);
 	});
 }
 
