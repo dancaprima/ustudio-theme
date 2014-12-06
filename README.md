@@ -7,33 +7,49 @@ ustudio-theme
 
 2. Install via [npm](https://www.npmjs.org/)
 
-    cd path/to/ustudio-theme
-    npm install -g
+```sh
+cd path/to/ustudio-theme
+npm install -g
+```
 
 ##Usage
 
 Set your ustudio keys in config.json and create a theme in the themes/directory following the example of the sample theme.
 
 ###List Themes
-    ustudio-theme list
+```sh
+ustudio-theme list
+```
 
 ###Create a new theme
-    ustudio-theme create -t [theme name]
+```sh
+ustudio-theme create -t [theme name]
+```
 
 ###Delete an existing theme
-    ustudio-theme delete -t [theme name]
+```sh
+ustudio-theme delete -t [theme name]
+```
 
 ###Upload a theme
-    ustudio-theme upload -t [theme name]
+```sh
+ustudio-theme upload -t [theme name]
+```
 
 ###Set a theme to a destination
-    ustudio-theme upload -t [theme name] -d [destination uid]
+```sh
+ustudio-theme upload -t [theme name] -d [destination uid]
+```
 
 ###List destinations
-    ustudio-theme destinations
+```sh
+ustudio-theme destinations
+```
 
 ###Help
-    ustudio-theme help
+```sh
+ustudio-theme help
+```
 
 All commands also support the `--debug` and `--test` options for debug output and not making API requests respectively.
 
