@@ -1,4 +1,4 @@
-ustudio-player-theme
+ustudio-theme
 ====================
 
 ##Installation
