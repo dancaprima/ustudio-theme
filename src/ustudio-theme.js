@@ -340,26 +340,20 @@ function request(method, path, params, options, callback){
 	}
 
 	var post_body = null,
-		fmt = "json";
+		form = null;
 
 	if(options.form){
-		options.form.form = new formData();
+		form = new formData();
 		_.each(options.form.fields, function(value, key){
-			options.form.form.append(key, value);
+			form.append(key, value);
 		});
-		post_options.headers =  options.form.form.getHeaders();
-
-		fmt = "form";
+		post_options.headers =  form.getHeaders();
 	}
 
 	post_options.headers['X-Auth-Token'] = config.access_token;
 
 	if(options.body){
-		if(fmt === "json"){
-			post_body = JSON.stringify(options.body, null, 2);
-		}else{
-			post_body = options.body;
-		}
+		post_body = JSON.stringify(options.body, null, 2);
 		post_options.headers['Content-Length'] = Buffer.byteLength(post_body);
 	}
 	if(DEBUG){
@@ -372,8 +366,8 @@ function request(method, path, params, options, callback){
 	}
 	if(!TEST){
 		if(options.form){
-			options.form.form.submit(post_options, function(err, response){
-				if (err){ throw err; };
+			form.submit(post_options, function(err, response){
+				if (err){ throw err; }
 				var str = '';
 				response.setEncoding('utf-8');
 
@@ -387,9 +381,9 @@ function request(method, path, params, options, callback){
 		}else{
 			var req = https.request(post_options, _.partial(response_callback, callback));
 			if(options.form){
-				options.form.form.pipe(req);
+				form.pipe(req);
 			}
-			if(options.body){
+			if(options.body && post_body){
 				req.write(post_body);
 			}
 			req.end();
