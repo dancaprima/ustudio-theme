@@ -5,24 +5,17 @@
  */
 module.exports = function(grunt) {
 	var _ = require("underscore" ),
-		fs = require("fs");
+		fs = require("fs" ),
+		util = require("util");
 
 	//## Define Grunt Config
 	var grunt_config = {
 		pkg: grunt.file.readJSON('package.json'),
 		clean: {
-			sample: ["themes/sample/sample.zip"]
+
 		},
 		compress: { /* @see https://github.com/gruntjs/grunt-contrib-compress */
-			//TODO create a destination per theme directory
-			sample: {
-				options: {
-					archive: 'sample.zip'
-				},
-				files: [
-					{ src: ['themes/sample/files/**'], dest: 'themes/sample/', filter: 'isFile' }
-				]
-			}
+
 		},
 		uglify: {
 			options: {
@@ -55,33 +48,56 @@ module.exports = function(grunt) {
 			}
 		},
 		watch: {
-			main:{
-				files: ['<%= jshint.files %>'],
-				tasks: ['concat']
-			}
+
+		},
+		"ustudio-theme-upload":{
+
 		}
 	};
 	//### Add Per-Theme config / targets
 	var themes = fs.readdirSync("./themes");
+	themes = _.filter(themes, function(theme){
+		var fs_stats = fs.statSync("./themes/"+theme);
+		return fs_stats.isDirectory();
+		}
+	);
 	//TODO foreach theme in ./themes
-	for( var theme in themes){
-		//and add grunt targets to grunt_config
+	_.each(themes, function(theme){
+		//##Add grunt targets to grunt_config
+
+		//## Clean
+		grunt_config.clean[theme] = ["themes/"+theme+"/"+theme+".zip"];
+		//### Compress
 		grunt_config.compress[theme] = {
 			options: {
-				archive: theme+'.zip'
+				archive: 'themes/'+theme+'/'+theme+'.zip'
 			},
 			files: [
-				{ src: ['themes/'+theme+'/files/**'], dest: 'themes/'+theme+'/', filter: 'isFile' }
+				{ expand:true, cwd: 'themes/'+theme+'/files/', src: [ 'template.html', 'main.css', 'static/**'], filter: 'isFile' }
 			]
 		};
-	}
+		//## Watch
+		grunt_config.watch[theme] = {
+			files: ['themes/'+theme+'/files/**'],
+			tasks: ['clean:'+theme, 'compress:'+theme ,'ustudio-theme-upload:'+theme],
+			options:{
+				spawn:false
+			}
+		};
+		//## uStudio Theme Upload
+		grunt_config["ustudio-theme-upload"][theme] = {
+			theme: theme
+		};
+	});
 
-	//### Set the default task
-	var target = grunt.option("target");
-	if(target === ""){
-		grunt.option("target", "default");
-	}
-	grunt.initConfig(grunt_config);
+	//console.log(util.inspect(grunt_config.watch.iga_test_theme, {colors:true}));
+
+	//## Register Custom Tasks
+	//### uStudio Upload Task
+	grunt.registerMultiTask('ustudio-theme-upload', 'Perform API requests to upload a compressed theme', function() {
+		var uStudio = require("./src/ustudio-theme");
+		uStudio.upload_theme(this.target);
+	});
 
 	//## Load Tasks
 	//### Build
@@ -93,20 +109,5 @@ module.exports = function(grunt) {
 	//### Watch
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
-	//### uStudio Deploy
-	grunt.registerMultiTask('ustudio-theme-deploy', 'Perform API requests to upload a compressed theme', function() {
-		var uStudio = require("./src/ustudio-theme");
-		var target = grunt.option('target');
-		uStudio.deploy_theme(target);
-	});
-
-	//## Register Grunt Tacks
-	//ustudio-theme watch -t <theme> -d <destination>
-	//ustudio-theme build -t <theme>
-	grunt.registerTask('build', ['clean', /*'uglify'*/, 'compress']);
-	//ustudio-theme debug -t <theme>
-	grunt.registerTask('debug', ['jshint']);
-	//ustudio-theme deploy -t <theme> -d <destination>
-	grunt.registerTask('deploy', [ 'clean', /*'uglify'*/, 'compress', 'ustudio-theme-deploy']);
-
+	grunt.initConfig(grunt_config);
 };

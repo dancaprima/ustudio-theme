@@ -46,7 +46,7 @@ var uStudioAPIEndpoints = {
 	}
 };
 
-var DEBUG = false,
+var DEBUG = false,//TODO allow parameter / require
 	TEST = false;
 
 function ustudio_theme(options){
@@ -69,7 +69,7 @@ function ustudio_theme(options){
 	var method = _.first(argv._ ),
 		theme = argv.theme,
 		destination = argv.destination;
-	DEBUG = argv.debug;
+	DEBUG = argv.debug || true;
 	TEST = argv.test;
 
 	if(!method){
@@ -107,7 +107,7 @@ function ustudio_theme(options){
 			break;
 		case "upload":
 			if(DEBUG){ console.log("CALL upload_theme: ".debug + theme); }
-			ustudio_theme.upload_theme(theme);
+			_grunt(["clean:"+theme, "compress:"+theme, "ustudio-deploy-theme:"+theme]);
 			break;
 		// Destinations
 		case "destinations":
@@ -115,20 +115,33 @@ function ustudio_theme(options){
 			ustudio_theme.list_destinations();
 			break;
 		//Help
+		case "watch":
+			_grunt(["watch:"+theme]);
+			break;
 		case "help":
 			opts.showHelp();
 			break;
 	}
-
-	/*
-	var grunt = require("grunt");
-	grunt.cli({
-		gruntfile: "./gruntfile.js",
-		target: "<THEME NAME>"
-	});
-	*/
-
 }
+
+ function _grunt(command, target, done){
+	"use strict";
+	var grunt = require("grunt");
+	/*grunt.cli({
+		tasks: [command],
+		gruntfile: "./gruntfile.js",
+		target: target
+	});*/
+	var options = {
+		gruntfile: "./gruntfile.js",
+		target: target
+	};
+	/*if(DEBUG){
+		options.verbose = true;
+		options.debug = true;
+	}*/
+	grunt.tasks(command, options, done);
+ }
 
 //## List Themes
 ustudio_theme.list_themes = function(){
@@ -156,18 +169,24 @@ ustudio_theme.upload_theme = function(theme_name){
 	if(!theme_json_exists){
 		console.error("ERROR theme.json file not found: ".error + theme_json_path );
 		return;
-	}else if(!theme_zip_exists){
+	}
+
+	//_grunt(["clean:"+theme_name, "compress:"+theme_name], theme_name, function(){});
+
+	if(!theme_zip_exists){
 		console.error("ERROR theme zip file not found: ".error + theme_zip_path );
 		return;
 	}
 
 	//Get the theme upload path
 	var theme_json = JSON.parse(fs.readFileSync(theme_json_path));
-	var path = theme_json.upload_url;
+	var path = theme_json.upload_url,
+		host = path.split('/')[2];
 
 	if(DEBUG){ console.log(("UPLOAD theme "+ theme_name+" ").debug + theme_zip_path); }
 	console.log("Uploading please wait...".info);
 	request('POST', path, null, {
+		host: host,
 		form: {
 			fields:{
 				package: fs.createReadStream(theme_zip_path)
@@ -325,7 +344,7 @@ function request(method, path, params, options, callback){
 	options = options || {};
 	//add the access token
 	var post_options = {
-		host: "app.ustudio.com",
+		host: options.host || "app.ustudio.com",
 		path: path,
 		method: method,//POST or GET
 		headers: {
