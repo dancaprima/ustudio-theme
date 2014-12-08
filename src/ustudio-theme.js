@@ -107,7 +107,7 @@ function ustudio_theme(options){
 			break;
 		case "upload":
 			if(DEBUG){ console.log("CALL upload_theme: ".debug + theme); }
-			_grunt(["clean:"+theme, "compress:"+theme, "ustudio-deploy-theme:"+theme]);
+			_grunt(["clean:"+theme, "compress:"+theme, "ustudio-theme-upload:"+theme]);
 			break;
 		// Destinations
 		case "destinations":
