@@ -10,6 +10,7 @@ ustudio-theme
 ```sh
 cd path/to/ustudio-theme
 npm install -g
+git update-index --assume-unchanged src/config.json
 ```
 
 ##Usage
