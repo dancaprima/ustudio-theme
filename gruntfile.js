@@ -78,10 +78,11 @@ module.exports = function(grunt) {
 		};
 		//## Watch
 		grunt_config.watch[theme] = {
-			files: ['themes/'+theme+'/files/**'],
+			files: ['themes/'+theme+'/files/**', 'themes/'+theme+'/test/*.html'],
 			tasks: ['clean:'+theme, 'compress:'+theme ,'ustudio-theme-upload:'+theme],
 			options:{
-				spawn:false
+				spawn:false,
+				livereload:true
 			}
 		};
 		//## uStudio Theme Upload
@@ -96,7 +97,8 @@ module.exports = function(grunt) {
 	//### uStudio Upload Task
 	grunt.registerMultiTask('ustudio-theme-upload', 'Perform API requests to upload a compressed theme', function() {
 		var uStudio = require("./src/ustudio-theme");
-		uStudio.upload_theme(this.target);
+		var done = this.async();
+		uStudio.upload_theme(this.target, done);
 	});
 
 	//## Load Tasks

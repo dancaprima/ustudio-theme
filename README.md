@@ -54,5 +54,9 @@ ustudio-theme help
 
 All commands also support the `--debug` and `--test` options for debug output and not making API requests respectively.
 
+## Livereload
+see [Livereload instructions](http://feedback.livereload.com/knowledgebase/articles/67441-how-do-i-start-using-livereload) and [Installing Livereload browser extension](http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions-)
+[Chrome Extension](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei)
+
 ##Documentation
 Official uStudio docs can be found in the docs/ folder.

@@ -11,7 +11,8 @@ var _ = require('underscore' ),
 	stream = require("stream" ),
 	https = require('https'),
 	querystring = require('querystring'),
-	formData = require('form-data');
+	formData = require('form-data' ),
+	sleep = require('sleep');
 
 colors.setTheme({
 	info: 'green',
@@ -157,7 +158,7 @@ ustudio_theme.list_themes = function(){
 };
 
 //## Upload a local theme
-ustudio_theme.upload_theme = function(theme_name){
+ustudio_theme.upload_theme = function(theme_name, done){
 	"use strict";
 	var theme_dir_path = "./themes/"+theme_name,
 		theme_json_path = theme_dir_path + "/theme.json",
@@ -202,6 +203,7 @@ ustudio_theme.upload_theme = function(theme_name){
 		}else{
 			console.error(("ERROR "+statusCode+" unable to upload theme.").error);
 		}
+		if(done){ done(); }
 	});
 };
 
