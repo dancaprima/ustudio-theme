@@ -1,5 +1,5 @@
 {
-	"name":"ustudio-player-theme",
+	"name":"ustudio-theme",
 	"version":"0.1.0",
 	"description":"Livefyre settings, content types, and taxonomies for IGA Drupal integration",
 	"author": {
@@ -24,9 +24,9 @@
 		"colors": "~0.6.2",
 		"form-data": "~0.1.4"
 	},
-	"homepage": "https://github.com/Interscope/ustudio-player-theme",
+	"homepage": "https://github.com/Interscope/ustudio-theme",
 	"repository" :{
 		"type" : "git",
-		"url" : "https://github.com/Interscope/ustudio-player-theme"
+		"url" : "https://github.com/Interscope/ustudio-theme"
 	}
 }
