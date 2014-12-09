@@ -11,8 +11,7 @@ var _ = require('underscore' ),
 	stream = require("stream" ),
 	https = require('https'),
 	querystring = require('querystring'),
-	formData = require('form-data' ),
-	sleep = require('sleep');
+	formData = require('form-data' );
 
 colors.setTheme({
 	info: 'green',
