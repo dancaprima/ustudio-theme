@@ -20,17 +20,10 @@ module.exports = function(grunt) {
 		uglify: {
 			options: {
 				banner: '/*! <%= pkg.name %> v<%= pkg.version %> build-<%= grunt.template.today("yyyy-mm-dd") %> */\n'
-			},
-			sample:{
-				files:{
-					'themes/sample/files/theme.js':['themes/sample/files/theme.js']
-				}
 			}
 		},
 		imageoptim: {/* @see https://github.com/JamieMason/grunt-imageoptim */ /* "grunt-imageoptim": "~1.4.1", */
-			sample: {
-				src: ['themes/sample/files/images']
-			}
+
 		},
 		jshint: {
 			// configure JSHint (documented at http://www.jshint.com/docs/)
@@ -41,10 +34,6 @@ module.exports = function(grunt) {
 					module: true,
 					smarttabs: true
 				}
-			},
-			sample:{
-				// define the files to lint
-				files: ['themes/sample/files/js/*.js']
 			}
 		},
 		watch: {
@@ -88,6 +77,22 @@ module.exports = function(grunt) {
 		//## uStudio Theme Upload
 		grunt_config["ustudio-theme-upload"][theme] = {
 			theme: theme
+		};
+		//## Uglify
+		grunt_config.uglify[theme] = {
+			files:{
+				dest: 'themes/'+theme+'/files/static/js'+theme+'.min.js',
+				src: 'themes/'+theme+'/files/static/js/*'
+			}
+		};
+
+		//## JSHint
+		grunt_config.jshint[theme] = {
+			files: ['themes/'+theme+'/files/static/**.js']
+		};
+		//## ImageOptim
+		grunt_config.imageoptim[theme] = {
+			src: ['themes/'+theme+'/files/static/images/*']
 		};
 	});
 

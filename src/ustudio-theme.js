@@ -69,7 +69,7 @@ function ustudio_theme(options){
 	var method = _.first(argv._ ),
 		theme = argv.theme,
 		destination = argv.destination;
-	DEBUG = argv.debug || true;
+	DEBUG = argv.debug;
 	TEST = argv.test;
 
 	if(!method){
@@ -136,10 +136,10 @@ function ustudio_theme(options){
 		gruntfile: "./gruntfile.js",
 		target: target
 	};
-	/*if(DEBUG){
+	 if(DEBUG){
 		options.verbose = true;
 		options.debug = true;
-	}*/
+	}
 	grunt.tasks(command, options, done);
  }
 
