@@ -39,12 +39,17 @@ ustudio-theme upload -t [theme name]
 
 ###Set a theme to a destination
 ```sh
-ustudio-theme upload -t [theme name] -d [destination uid]
+ustudio-theme set -t [theme name] -d [destination uid]
 ```
 
 ###List destinations
 ```sh
 ustudio-theme destinations
+```
+
+###Watch
+```sh
+ustudio-theme watch -t [theme name]
 ```
 
 ###Help
