@@ -4,6 +4,7 @@
       data-player-interaction="true"
       data-player-current-state=""
       data-player-states="playing,paused,waiting,loading,swapping,idle">
+	  <!-- PLAYER -->
   </div>
 
   <div data-player-states="waiting,swapping" class="black-out">
@@ -96,28 +97,11 @@
       data-player-interaction="true"
       data-player-state-transition="fade"
       class="social-controls-layer left">
-	<h1>Test Player 17</h1>
     <a class="social-button tour" href="#"></a>
     <a class="social-button mail" href="#"></a>
   </div>
-
-  <div class="tour-window">
-    <h3>Upcoming Tour Dates</h3>
-    <a href="#" class="close-tour-window">close</a>
-    <ul class="tour-dates">
-    </ul>
-  </div>
-
-  <div class="mail-window">
-    <h3>Subscribe to our Mailing List</h3>
-    <input type="text" placeholder="Your Email Address"/>
-    <div class="buttons">
-      <button class="subscribe-button">Subscribe</button>
-      <button class="cancel-button">Cancel</button>
-    </div>
-  </div>
-
 </div>
 
-<script type="application/javascript" src="{{ theme_url }}/static/js/tour.js"></script>
-<script type="application/javascript" src="{{ theme_url }}/static/js/mail.js"></script>
+<script type="application/javascript" src="//cache.umusic.com/_global/js/require.js"></script>
+<script type="application/javascript" src="//cache.umusic.com/_global/js/iga/iga.require.main.min.js"></script>
+<script type="application/javascript" src="{{ theme_url }}/static/js/main.js"></script>
