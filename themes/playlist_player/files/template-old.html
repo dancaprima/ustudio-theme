@@ -1,0 +1,123 @@
+<div data-player-container="fullscreen" class="container">
+  <div data-player-container="player" class="layer player-layer"
+      data-player-prevent-contextmenu="true"
+      data-player-interaction="true"
+      data-player-current-state=""
+      data-player-states="playing,paused,waiting,loading,swapping,idle">
+  </div>
+
+  <div data-player-states="waiting,swapping" class="black-out">
+  </div>
+
+  <div data-player-states="waiting" data-player-container="poster" data-player-state-transition="fade" class="layer poster-layer full-frame">
+  </div>
+
+  <div data-player-states="waiting"
+       data-player-state-transition="fade"
+       data-player-interaction="true"
+       data-player-actions="click=play"
+       class="poster-controls-layer layer gradient-background">
+    <button data-player-actions="click=play"
+      data-player-touch-classes="touch-enabled,touch-disabled"
+      class="play-video">Play Video</button>
+    <div class="video-information">
+      <span class="video-title" data-player-video-attribute="name"></span>
+      <span class="video-duration" data-player-text="duration"></span>
+    </div>
+  </div>
+
+  <div data-player-states="playing,paused,swapping"
+      data-player-interaction="true"
+      data-player-state-transition="fade"
+      data-player-current-state=""
+      class="player-controls-layer">
+    <div class="player-control-bar">
+      <button data-player-actions="click=play-pause-toggle"
+        data-player-touch-classes="touch-enabled,touch-disabled"
+        class="button play-pause-video hide-left"></button>
+      <button data-player-actions="click=fullscreen-toggle"
+        data-player-touch-classes="touch-enabled,touch-disabled"
+        class="button fullscreen hide-right"></button>
+      <div class="seek-bar">
+        <div class="seek-bar-loaded-progress"
+            data-player-width="buffer"></div>
+        <div class="seek-bar-play-progress"
+          data-player-width="progress">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div data-player-states="idle"
+      data-player-interaction="true"
+      data-player-state-transition="fade"
+      data-player-current-state="idle"
+      class="player-controls-layer">
+    <div class="player-control-bar">
+      <button data-player-actions="click=play-pause-toggle"
+        data-player-touch-classes="touch-enabled,touch-disabled"
+        class="button play-pause-video hide-left"></button>
+      <button data-player-actions="click=fullscreen-toggle"
+        data-player-touch-classes="touch-enabled,touch-disabled"
+        class="button fullscreen hide-right"></button>
+      <div class="seek-bar">
+        <div class="seek-bar-loaded-progress"
+            data-player-width="buffer"></div>
+        <div class="seek-bar-play-progress"
+          data-player-width="progress">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div data-player-states="playing,paused,waiting,swapping"
+      data-player-interaction="true"
+      data-player-state-transition="fade"
+      class="social-controls-layer right">
+    <a class="social-button facebook" target="_blank" href="http://www.facebook.com/riseagainst"></a>
+    <a class="social-button twitter" target="_blank" href="http://www.twitter.com/riseagainst"></a>
+    <a class="social-button youtube" target="_blank" href="https://www.youtube.com/user/RiseAgainst?sub_confirmation=1"></a>
+    <a class="social-button instagram" target="_blank" href="http://instagram.com/riseagainst"></a>
+  </div>
+
+  <a class="branding"
+    data-player-states="waiting,playing,paused,swapping,loading"
+    data-player-state-transition="fade"
+    data-player-current-state=""
+    href="http://riseagainst.com" target="_blank"></a>
+
+  <a class="branding"
+    data-player-states="idle"
+    data-player-state-transition="fade"
+    data-player-current-state="idle"
+    href="http://riseagainst.com" target="_blank"></a>
+
+  <div data-player-states="playing,paused,waiting"
+      data-player-interaction="true"
+      data-player-state-transition="fade"
+      class="social-controls-layer left">
+	<h1>Test Player 44</h1>
+    <a class="social-button tour" href="#"></a>
+    <a class="social-button mail" href="#"></a>
+  </div>
+
+  <div class="tour-window">
+    <h3>Upcoming Events</h3>
+    <a href="#" class="close-tour-window">close</a>
+    <ul class="tour-dates">
+    </ul>
+  </div>
+
+  <div class="mail-window">
+    <h3>Subscribe to our Mailing List</h3>
+    <input type="text" placeholder="Your Email Address"/>
+    <div class="buttons">
+      <button class="subscribe-button">Subscribe</button>
+      <button class="cancel-button">Cancel</button>
+    </div>
+  </div>
+
+</div>
+
+<script type="application/javascript" src="{{ theme_url }}/static/js/tour.js"></script>
+<script type="application/javascript" src="{{ theme_url }}/static/js/mail.js"></script>

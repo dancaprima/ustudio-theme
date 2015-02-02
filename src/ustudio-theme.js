@@ -26,6 +26,10 @@ colors.setTheme({
 //Configuration Constants
 var config = require('./config.json');
 
+if(config.studio_uid === "" || config.access_token === ""){
+	console.error("ERROR Please fill out the studio uid and access token in config.json".error);
+}
+
 var uStudioAPIEndpoints = {
 	BASE_URL: "/api/v2/studios/" + config.studio_uid + "/",
 	themes: function(){
