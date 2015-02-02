@@ -7,7 +7,7 @@
 		"email" : "malcolm.poindexter@umusic.com"
 	},
 	"main":"src/ustudio-theme.js",
-	"preferGlobal": "true",
+	"preferGlobal": true,
 	"bin": {
 		"ustudio-theme" : "src/ustudio-theme.js"
 	},

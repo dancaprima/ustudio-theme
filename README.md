@@ -17,6 +17,12 @@ If you encounter errors running commands also run
 sudo npm install
 ```
 
+If ```npm -v``` is < 2.0 you will also need to upgrade for the latest version to work
+```sh
+npm update npm -g
+```
+If you encounter any issues see: [Fixing npm On Mac OS X for Homebrew Users](https://gist.github.com/DanHerbert/9520689)
+
 ##Usage
 
 Set your ustudio keys in config.json and create a theme in the themes/directory following the example of the sample theme.
@@ -62,6 +68,7 @@ ustudio-theme help
 ```
 
 All commands also support the `--debug` and `--test` options for debug output and not making API requests respectively.
+
 
 ## Livereload
 see [Livereload instructions](http://feedback.livereload.com/knowledgebase/articles/67441-how-do-i-start-using-livereload) and [Installing Livereload browser extension](http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions-)

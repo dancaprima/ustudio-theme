@@ -28,6 +28,7 @@ var config = require('./config.json');
 
 if(config.studio_uid === "" || config.access_token === ""){
 	console.error("ERROR Please fill out the studio uid and access token in config.json".error);
+	return;
 }
 
 var uStudioAPIEndpoints = {
