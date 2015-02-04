@@ -32,20 +32,20 @@
       data-player-current-state=""
       class="player-controls-layer">
     <div class="player-control-bar">
-  		<div id="left-controls">
-       	   <button data-player-actions="click=play-pause-toggle" data-player-touch-classes="touch-enabled,touch-disabled" class="button play-pause-video hide-left"></button>
-  		</div>
-  		<div id="right-controls">
-  			<!-- <button data-player-touch-classes="touch-enabled,touch-disabled" class="button share-btn hide-right"></button> -->
-  			<button data-player-actions="click=mute-unmute-toggle" data-player-touch-classes="touch-enabled,touch-disabled" class="button mute hide-right"></button>
-  			<button data-player-actions="click=hq-toggle" data-player-touch-classes="touch-enabled,touch-disabled" class="button hq hide-right"></button>
-  			<button data-player-actions="click=fullscreen-toggle " data-player-touch-classes="touch-enabled,touch-disabled" class="button fullscreen hide-right"></button>
-  			<!-- <button data-player-touch-classes="touch-enabled,touch-disabled" class="button buy-btn hide-right"></button> -->
-  		</div>	
-    	<div class="seek-bar">
-      	<div class="seek-bar-loaded-progress" data-player-width="buffer"></div>
-      	<div class="seek-bar-play-progress" data-player-width="progress"></div>
-    	</div>
+		<div id="left-controls">
+     	   <button data-player-actions="click=play-pause-toggle" data-player-touch-classes="touch-enabled,touch-disabled" class="button play-pause-video hide-left"></button>
+		</div>
+		<div id="right-controls">
+			<!-- <button data-player-touch-classes="touch-enabled,touch-disabled" class="button share-btn hide-right"></button> -->
+			<button data-player-actions="click=mute-unmute-toggle" data-player-touch-classes="touch-enabled,touch-disabled" class="button mute hide-right"></button>
+			<button data-player-actions="click=hq-toggle" data-player-touch-classes="touch-enabled,touch-disabled" class="button hq hide-right"></button>
+			<button data-player-actions="click=fullscreen-toggle " data-player-touch-classes="touch-enabled,touch-disabled" class="button fullscreen hide-right"></button>
+			<!-- <button data-player-touch-classes="touch-enabled,touch-disabled" class="button buy-btn hide-right"></button> -->
+		</div>	
+      	<div class="seek-bar">
+        	<div class="seek-bar-loaded-progress" data-player-width="buffer"></div>
+        	<div class="seek-bar-play-progress" data-player-width="progress"></div>
+      	</div>
     </div>
   </div>
 
@@ -72,32 +72,74 @@
   </div>
 
   <div data-player-states="playing,paused,waiting,swapping" data-player-interaction="true" data-player-state-transition="fade" class="social-controls-layer">
+    <!-- <div class="social-menu">
+	    <a class="social-button facebook" target="_blank" href="http://www.facebook.com/imaginedragons"></a>
+	    <a class="social-button twitter" target="_blank" href="http://www.twitter.com/imaginedragons"></a>
+	    <a class="social-button youtube" target="_blank" href="https://www.youtube.com/user/imaginedragonsvevo?sub_confirmation=1"></a>
+	    <a class="social-button instagram" target="_blank" href="http://instagram.com/imaginedragons"></a>
+	</div> -->
+	
     <div data-player-states="playing,paused,waiting,swapping" data-player-interaction="true" data-player-state-transition="fade" class="buy-controls-layer">
       <div class="buy-menu">
-  	    <a class="buy-button itunes" target="_blank" href="#"></a>
-  	    <a class="buy-button target" a="_blank" href="#"></a>
-  	    <a class="buy-button d2c" target="_blank" href="#"></a>
+  	    <a class="buy-button itunes" target="_blank" href="http://smarturl.it/idsmokemirrors?IQid=previewplayer"></a>
+  	    <a class="buy-button target" target="_blank" href="http://smarturl.it/smokemirrorstgt?IQid=previewplayer"></a>
+  	    <a class="buy-button d2c" target="_blank" href="http://smarturl.it/SmokeMirrorsBox?utm_source=previewplayer"></a>
   	  </div>
+	
+	<!-- <div class="sub-menu">
+		<a class="social-button tour" href="#"></a>
+		<a class="social-button mail" href="#"></a>
+	</div> -->
+  </div>
+  
+
+  <div data-player-states="playing,paused,waiting,swapping" data-player-interaction="true" data-player-state-transition="fade" class="playlist-toggle">
+  	<button data-player-actions="click=playlist-previous" data-player-touch-classes="touch-enabled,touch-disabled" class="button btn-prev"></button>
+  	<button data-player-actions="click=playlist-next" data-player-touch-classes="touch-enabled,touch-disabled" class="button btn-next"></button>
+  </div>
+
+  <a class="branding"
+    data-player-states="waiting,playing,paused,swapping,loading"
+    data-player-state-transition="fade"
+    data-player-current-state=""
+    href="https://www.imaginedragonsmusic.com" target="_blank"></a>
+
+  <a class="branding"
+    data-player-states="idle"
+    data-player-state-transition="fade"
+    data-player-current-state="idle"
+    href="https://www.imaginedragonsmusic.com" target="_blank"></a>
+
+  <!-- <div data-player-states="playing,paused,waiting" data-player-interaction="true" data-player-state-transition="fade" class="social-controls-layer left">
+	  <a class="social-button tour" href="#"></a>
+	  <a class="social-button mail" href="#"></a>
+  </div> -->
+
+    <!--  <div class="tour-window">
+    <h3>Upcoming Events</h3>
+    <a href="#" class="close-tour-window">close</a>
+    <ul class="tour-dates">
+    </ul>
+  </div>
+
+  <div class="mail-window">
+    <h3>Subscribe to our Mailing List</h3>
+    <input type="text" placeholder="Your Email Address"/>
+    <div class="buttons">
+      <button class="subscribe-button btn-flat">Subscribe</button>
+      <button class="cancel-button btn-flat">Cancel</button>
     </div>
-
-    <div data-player-states="playing,paused,waiting,swapping" data-player-interaction="true" data-player-state-transition="fade" class="playlist-toggle">
-    	<button data-player-actions="click=playlist-previous" data-player-touch-classes="touch-enabled,touch-disabled" class="button btn-prev"></button>
-    	<button data-player-actions="click=playlist-next" data-player-touch-classes="touch-enabled,touch-disabled" class="button btn-next"></button>
-    </div>
-
-    <a class="branding"
-      data-player-states="waiting,playing,paused,swapping,loading"
-      data-player-state-transition="fade"
-      data-player-current-state=""
-      href="https://www.imaginedragonsmusic.com" target="_blank"></a>
-
-    <a class="branding"
-      data-player-states="idle"
-      data-player-state-transition="fade"
-      data-player-current-state="idle"
-      href="https://www.imaginedragonsmusic.com" target="_blank"></a>
+  </div>
+  
+	<div class="buy-window" data-share-url="#" data-player-states="playing,paused,swapping,loading" data-player-current-state="" data-player-state-transition="fade">
+    	<button class="buy-button itunes"></button>
+    	<button class="buy-button target"></button>
+		<button class="buy-button d2c"></button>
+	</div> -->
 
 </div>
 
-<!-- <script type="text/javascript" src="https://dl.dropboxusercontent.com/s/jnlsw8bmduwcu1v/tooltip.js"></script> -->
+<!-- <script type="application/javascript" src="{{ theme_url }}/static/js/tour.js"></script>
+<script type="application/javascript" src="{{ theme_url }}/static/js/mail.js"></script>
+<script type="text/javascript" src="https://dl.dropboxusercontent.com/s/jnlsw8bmduwcu1v/tooltip.js"></script> -->
 <script type="text/javascript" src="https://dl.dropboxusercontent.com/s/chvpjn81rtzxxo7/custom.js"></script>
