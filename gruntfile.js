@@ -41,6 +41,9 @@ module.exports = function(grunt) {
 		},
 		"ustudio-theme-upload":{
 
+		},
+		"ustudio-module-upload":{
+
 		}
 	};
 	//### Add Per-Theme config / targets
@@ -81,8 +84,8 @@ module.exports = function(grunt) {
 		//## Uglify
 		grunt_config.uglify[theme] = {
 			files:{
-				dest: 'themes/'+theme+'/files/static/js'+theme+'.min.js',
-				src: 'themes/'+theme+'/files/static/js/*'
+				src: 'themes/'+theme+'/files/static/js/*',
+				dest: 'themes/'+theme+'/files/static/js'+theme+'.min.js'
 			}
 		};
 
@@ -96,6 +99,52 @@ module.exports = function(grunt) {
 		};
 	});
 
+	var modules = fs.readdirSync("./modules");
+	modules = _.filter(modules, function(module){
+			var fs_stats = fs.statSync("./modules/"+module);
+			return fs_stats.isDirectory();
+		}
+	);
+	console.log(modules);
+	_.each(modules, function(module){
+		//##Add grunt targets to grunt_config
+		//## Clean
+		grunt_config.clean[module] = ["modules/"+module+"/"+module+".zip"];
+		//### Compress
+		grunt_config.compress[module] = {
+			options: {
+				archive: 'modules/'+module+'/'+module+'.zip'
+			},
+			files: [
+				{ expand:true, cwd: 'modules/'+module+'/', src: [ '**.js'], filter: 'isFile' }
+			]
+		};
+		//## Watch
+		grunt_config.watch[module] = {
+			files: ['modules/'+module+'/**'],
+			tasks: ['clean:'+module, 'compress:'+module ,'ustudio-module-upload:'+module],
+			options:{
+				spawn:false
+			}
+		};
+		//## uStudio Theme Upload
+		grunt_config["ustudio-module-upload"][module] = {
+			module: module
+		};
+		//## Uglify
+		grunt_config.uglify[module] = {
+			files:{
+				src: 'modules/'+module+'/'+module+'.js',
+				dest: 'modules/'+module+'/'+module+'.min.js'
+			}
+		};
+
+		//## JSHint
+		grunt_config.jshint[module] = {
+			files: ['modules/'+module+'/**.js']
+		};
+	});
+
 	//console.log(util.inspect(grunt_config.watch.iga_test_theme, {colors:true}));
 
 	//## Register Custom Tasks
@@ -104,6 +153,11 @@ module.exports = function(grunt) {
 		var uStudio = require("./src/ustudio-theme");
 		var done = this.async();
 		uStudio.upload_theme(this.target, done);
+	});
+	grunt.registerMultiTask('ustudio-module-upload', 'Perform API requests to upload a compressed module', function() {
+		var uStudio = require("./src/ustudio-theme");
+		var done = this.async();
+		uStudio.upload_player_module(this.target, done);
 	});
 
 	//## Load Tasks
