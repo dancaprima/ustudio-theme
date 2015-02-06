@@ -36,37 +36,38 @@
 	uStudio.uStudioCore.instance.registerModule({
 		name: "iga_ustudio_analytics",
 		initialize: function(configuration, events, videos) {
-			var firstVideo = videos[0];
-			configuration.videoName = "";
-			configuration.videoProgress = 0;
+			var settings = {
+				videoName: "",
+				progress: 0
+			};
 			console.log("iga_ustudio_analytics:initialize");
 			//## Events
 			//### Play
 			events.subscribe("Player.playing", function() {
-				if(_gaOK()){ ga("send", "event", "uStudio Player", "play", configuration.videoName); }
+				if(_gaOK()){ ga("send", "event", "uStudio Player", "play", settings.videoName); }
 			});
 			//### Paused
 			events.subscribe("Player.paused", function() {
-				if(_gaOK()){ ga("send", "event", "uStudio Player", "pause", configuration.videoName); }
+				if(_gaOK()){ ga("send", "event", "uStudio Player", "pause", settings.videoName); }
 			});
 			//### Ended
 			events.subscribe("Player.ended", function() {
-				if(_gaOK()){ ga("send", "event", "uStudio Player", "end", configuration.videoName); }
+				if(_gaOK()){ ga("send", "event", "uStudio Player", "end", settings.videoName); }
 			});
 			//### Time Update
 			events.subscribe("Player.timeupdate", function(timeEvent) {
-				var timeDiff = timeEvent.currentTime - configuration.videoProgress;
+				var timeDiff = timeEvent.currentTime - settings.progress;
 				if(timeDiff > 10){
 					// track in 10 second intervals
-					if(_gaOK()){ ga("send", "event", "uStudio Player", "time", configuration.videoName, timeDiff, true); }
-					configuration.videoProgress += timeDiff;
+					if(_gaOK()){ ga("send", "event", "uStudio Player", "time", settings.videoName, timeDiff, true); }
+					settings.progress += timeDiff;
 				}
 			});
 			//### Video Selected
 			events.subscribe("Playlist.videoSelected", function(video) {
-				configuration.videoName = "";
-				configuration.videoProgress = 0;
-				if(_gaOK()){ ga("send", "event", "uStudio Player", "video", configuration.videoName); }
+				settings.videoName = video.video.name;
+				settings.progress = 0;
+				if(_gaOK()){ ga("send", "event", "uStudio Player", "video", settings.videoName); }
 			});
 		}
 	});
