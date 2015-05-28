@@ -70,8 +70,6 @@ var uStudioAPIEndpoints = {
 var DEBUG = false,//TODO allow parameter / require
 	TEST = false;
 
-
-
 //## Command Line Interface
 function ustudio_theme(options){
 
@@ -192,7 +190,8 @@ function ustudio_theme(options){
 			break;
 		case "upload-module":
 			if(valid_module()){
-				_grunt(["clean:"+module, "compress:"+module, "ustudio-module-upload:"+module]);
+				//TODO --compress
+				_grunt(["clean:"+module, "ustudio-module-upload:"+module]);
 			}
 			break;
 		case "enable-module":
@@ -244,7 +243,6 @@ var _tpl = {
 	msg_upload_status: _.template("UPLOAD {{type}} {{name}} from: ")
 };
 function ustudio_theme_settings(type, name){
-
 	var ustudio_dir_path = _tpl.directory_path({ name: name, type: type }),
 		ustudio_json = type+".json",
 		ustudio_json_path = _tpl.json_path({ name: name, type: type }),
@@ -369,14 +367,13 @@ ustudio_theme.delete = function(type, name, endpoint){
 };
 //### Upload
 ustudio_theme.upload = function(type, name, callback){
-
 	var config = ustudio_theme_settings(type, name);
 	//Check that the required files exist
 	if(!config.json.EXISTS){
 		console.error(("ERROR "+config.json.file+" file not found: ").error + config.json.path );
 		return;
 	}
-	if(!config.zip.EXISTS){
+	if(type !== "module" && !config.zip.EXISTS){
 		console.error(("ERROR "+config.zip.file+" not found: ").error + config.zip.path );
 		return;
 	}
@@ -414,7 +411,6 @@ ustudio_theme.upload = function(type, name, callback){
 		if(callback){ callback(response, config); }
 	});
 };
-
 
 //## Theme Functions
 //### List Existing Themes
@@ -576,7 +572,6 @@ ustudio_theme.destination_set_theme = function(destination_uid, theme_name, disa
 //## Player Modules
 //### Create Module
 ustudio_theme.create_player_module = function(player_module_name, callback){
-
 	ustudio_theme.create("module", player_module_name, uStudioAPIEndpoints.modules(), callback);
 };
 

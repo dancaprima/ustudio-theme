@@ -53,10 +53,10 @@ module.exports = function(grunt) {
 		return fs_stats.isDirectory();
 		}
 	);
-	//TODO foreach theme in ./themes
-	_.each(themes, function(theme){
-		//##Add grunt targets to grunt_config
 
+	//Add Grunt targets for themes to grunt_config
+	_.each(themes, function(theme){
+		//foreach theme in ./themes
 		//## Clean
 		grunt_config.clean[theme] = ["themes/"+theme+"/"+theme+".zip"];
 		//### Compress
@@ -99,38 +99,21 @@ module.exports = function(grunt) {
 		};
 	});
 
+	//Add Grunt targets for modules
 	var modules = fs.readdirSync("./modules");
 	modules = _.filter(modules, function(module){
 			var fs_stats = fs.statSync("./modules/"+module);
 			return fs_stats.isDirectory();
 		}
 	);
-	console.log(modules);
 	_.each(modules, function(module){
-		//##Add grunt targets to grunt_config
 		//## Clean
 		grunt_config.clean[module] = ["modules/"+module+"/"+module+".zip"];
-		//### Compress
-		grunt_config.compress[module] = {
-			options: {
-				archive: 'modules/'+module+'/'+module+'.zip'
-			},
-			files: [
-				{ expand:true, cwd: 'modules/'+module+'/', src: [ '**.js'], filter: 'isFile' }
-			]
-		};
-		//## Watch
-		grunt_config.watch[module] = {
-			files: ['modules/'+module+'/**'],
-			tasks: ['clean:'+module, 'compress:'+module ,'ustudio-module-upload:'+module],
-			options:{
-				spawn:false
-			}
-		};
 		//## uStudio Theme Upload
 		grunt_config["ustudio-module-upload"][module] = {
 			module: module
 		};
+
 		//## Uglify
 		grunt_config.uglify[module] = {
 			files:{
@@ -142,6 +125,15 @@ module.exports = function(grunt) {
 		//## JSHint
 		grunt_config.jshint[module] = {
 			files: ['modules/'+module+'/**.js']
+		};
+
+		//## Watch
+		grunt_config.watch[module] = {
+			files: ['modules/'+module+'/**'],
+			tasks: ['clean:'+module ,'ustudio-module-upload:'+module],
+			options:{
+				spawn:false
+			}
 		};
 	});
 
