@@ -28,7 +28,7 @@ colors.setTheme({
 });
 
 //Configuration Constants
-var config = require('./config.json');
+var config = require('../config.json');
 
 if(config.studio_uid === "" || config.access_token === ""){
 	console.error("ERROR Please fill out the studio uid and access token in config.json".error);
@@ -202,8 +202,8 @@ function ustudio_theme(options){
 		//TODO disable module
 		//Help
 		case "watch":
-			if(valid_theme() || valid_module()){
-				_grunt(["watch:"+(theme || module)]);
+			if(valid_theme()){
+				_grunt(["watch:"+(theme)]);
 			}
 			break;
 		case "help":
@@ -455,8 +455,8 @@ ustudio_theme.upload_theme = function(theme_name, done){
 		}
 	}, function(response, statusCode){
 		if(DEBUG){
-			//console.log(response);
-			//console.log(statusCode);
+			console.log(response);
+			console.log(statusCode);
 		}
 		if(statusCode >= 200 && statusCode < 300){
 			console.log(("Theme "+theme_name+" (" + theme_json.uid + ") uploaded to uStudio ("+statusCode+")").info);
@@ -689,6 +689,7 @@ function request(method, path, params, options, callback){
 			form.submit(post_options,  _.partial(response_callback, callback));
 		}else{
 			var req = https.request(post_options, _.partial(response_callback, callback, null));
+			console.log(options.body)
 			if(options.body && post_body){
 				req.write(post_body);
 			}
